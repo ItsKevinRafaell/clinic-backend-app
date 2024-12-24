@@ -7,6 +7,7 @@ namespace App\Models;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -25,6 +26,21 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
+        'role',
+        'google_id',
+        'ktp_number',
+        'phone_number',
+        'address',
+        'gender',
+        'date_birth',
+        'certification',
+        'specialist_id',
+        'chat_fee',
+        'telemedicine_fee',
+        'start_time',
+        'end_time',
+        'clinic_id',
+        'image'
     ];
 
     /**
@@ -55,5 +71,13 @@ class User extends Authenticatable implements FilamentUser
         if ($panel->getId() === 'admin') {
             return str_ends_with($this->email, '@gmail.com');
         }
+    }
+
+    public function clinic(): BelongsTo {
+        return $this->belongsTo(Clinic::class);
+    }
+
+    public function specialization(): BelongsTo {
+        return $this->belongsTo(Specialist::class);
     }
 }
