@@ -1,0 +1,79 @@
+{
+    "version": 2,
+    "framework": null,
+    "functions": {
+        "api/index.php": { "runtime": "vercel-php@0.6.0" }
+    },
+    "routes": [
+        {
+            "src": "/css/(.*)",
+            "dest": "/public/css/$1",
+            "headers": {
+                "Cache-Control": "public, max-age=31536000, immutable",
+                "Content-Security-Policy": "upgrade-insecure-requests",
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Frame-Options": "DENY",
+                "X-Content-Type-Options": "nosniff"
+            }
+        },
+        {
+            "src": "/js/(.*)",
+            "dest": "/public/js/$1",
+            "headers": {
+                "Cache-Control": "public, max-age=31536000, immutable",
+                "Content-Security-Policy": "upgrade-insecure-requests",
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Frame-Options": "DENY",
+                "X-Content-Type-Options": "nosniff"
+            }
+        },
+        {
+            "src": "/build/(.*)",
+            "dest": "/public/build/$1",
+            "headers": {
+                "Cache-Control": "public, max-age=31536000, immutable",
+                "Content-Security-Policy": "upgrade-insecure-requests",
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Frame-Options": "DENY",
+                "X-Content-Type-Options": "nosniff"
+            }
+        },
+        {
+            "src": "/resources/(.*)",
+            "dest": "/public/resources/$1",
+            "headers": {
+                "Cache-Control": "public, max-age=31536000, immutable",
+                "Content-Security-Policy": "upgrade-insecure-requests",
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Frame-Options": "DENY",
+                "X-Content-Type-Options": "nosniff"
+            }
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php",
+            "headers": {
+                "Content-Security-Policy": "upgrade-insecure-requests",
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
+            }
+        }
+    ],
+    "env": {
+        "APP_ENV": "production",
+        "APP_DEBUG": "true",
+        "APP_URL": "https://clinic-mobile-backend.vercel.app",
+        "ASSET_URL": "https://clinic-mobile-backend.vercel.app",
+        "APP_KEY": "base64:Li4YcUKE6a48ipq2ES1Q8MVDfIK3e7pWnxxzexiXizE=",
+        "APP_CONFIG_CACHE": "/tmp/config.php",
+        "APP_EVENTS_CACHE": "/tmp/events.php",
+        "APP_PACKAGES_CACHE": "/tmp/packages.php",
+        "APP_ROUTES_CACHE": "/tmp/routes.php",
+        "APP_SERVICES_CACHE": "/tmp/services.php",
+        "VIEW_COMPILED_PATH": "/tmp/views",
+        "CACHE_DRIVER": "array",
+        "LOG_CHANNEL": "stderr",
+        "SESSION_DRIVER": "array",
+        "SSR_TEMP_PATH": "/tmp/ssr",
+        "NODE_PATH": "node"
+    }
+}
