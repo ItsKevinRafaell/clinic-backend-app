@@ -77,7 +77,7 @@ class User extends Authenticatable implements FilamentUser
         return $this->belongsTo(Clinic::class);
     }
 
-    public function specialization(): BelongsTo {
+    public function specialist(): BelongsTo {
         return $this->belongsTo(Specialist::class);
     }
 }

@@ -19,12 +19,13 @@ Route::put('/user/googleid/{id}', [UserController::class, 'updateGoogleId']);
 Route::post('/user', [UserController::class, 'store']);
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 
+Route::get('/doctors/active', [DoctorController::class, 'getDoctorActive']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/doctors', [DoctorController::class, 'index']);
     Route::post('/doctors', [DoctorController::class, 'store']);
     Route::put('/doctors/{id}', [DoctorController::class, 'update']);
     Route::delete('/doctors/{id}', [DoctorController::class, 'destroy']);
-    Route::get('/doctors/active', [DoctorController::class, 'getDoctorActive']);
     Route::get('/doctors/search', [DoctorController::class, 'searchDoctor']);
     Route::get('/doctors/clinic/{id}', [DoctorController::class, 'getDoctorByClinic']);
     Route::get('/doctors/specialist/{id}', [DoctorController::class, 'getDoctorBySpecialist']);
