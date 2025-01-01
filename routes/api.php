@@ -12,6 +12,7 @@ Route::get('/user', function (Request $request) {
 
 
 Route::post('/login', [UserController::class, 'login']);
+Route::post('/login/google', [UserController::class, 'loginGoogle']);
 Route::get('/user/check', [UserController::class, 'checkUser'])->middleware('auth:sanctum');
 Route::get('/user/{email}', [UserController::class, 'index']);
 Route::put('/user/{id}', [UserController::class, 'update']);

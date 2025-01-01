@@ -8,6 +8,7 @@ use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
+use Google_Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -131,5 +132,56 @@ class UserController extends Controller
             'status' => 'success',
             'data' => $user,
         ], 201);
+    }
+
+    public function loginGoogle(Request $request) {
+        $idToken = $request->id_token;
+
+        $client = new Google_Client(['client_id' => env('GOOGLE_CLIENT_ID')]);
+
+        $payload = $client->verifyIdToken($idToken);
+
+        if($payload) {
+            $googleId = $payload['sub'];
+            $email = $payload['email'];
+            $name = $payload['name'];
+
+            $user = User::where('email', $email)->first();
+
+            if ($user) {
+                $token = $user->createToken('auth_token')->plainTextToken;
+
+                return response()->json([
+                    'status' => 'success',
+                    'data' => [
+                        'user' => $user,
+                        'token' => $token,
+                    ]
+                ], 200);
+            } else {
+                $user = User::create([
+                    'name' => $name,
+                    'email' => $email,
+                    'google_id' => $googleId,
+                    'password' => Hash::make('password'),
+                    'role' => 'patient',
+                ]);
+
+                $token = $user->createToken('auth_token')->plainTextToken;
+
+                return response()->json([
+                    'status' => 'success',
+                    'data' => [
+                        'user' => $user,
+                        'token' => $token,
+                    ]
+                ], 200);
+            }
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Google ID token is invalid',
+            ],401);
+        }
     }
 }
